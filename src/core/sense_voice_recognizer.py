@@ -18,3 +18,20 @@ class SenseVoiceRecognizer(Recognizer):
         except Exception as error:
             logger.critical(f'创建失败{error}')
             return False
+
+    def create_vad(self, sample_rate):
+        """VAD配置"""
+        vad_config = sherpa_onnx.VadModelConfig()
+        vad_config.silero_vad.model = self.config.vad_model_path
+        vad_config.silero_vad.threshold = 0.5 #检测阈值
+        vad_config.silero_vad.min_silence_duration = 0.1 # 最小静音持续时间
+        vad_config.silero_vad.min_speech_duration = 0.25 # 最小语音持续时间
+        vad_config.silero_vad.max_speech_duration = 8 # 最大语音持续时间(秒)
+        vad_config.sample_rate = sample_rate #采样率
+        try:
+            vad = sherpa_onnx.VoiceActivityDetector(vad_config, buffer_size_in_seconds=10)
+            logger.info("VAD加载成功。")
+            return vad
+        except Exception as error:
+            logger.critical(f"加载VAD失败: {error}")
+            return False
