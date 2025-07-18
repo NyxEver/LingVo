@@ -35,3 +35,8 @@ class SenseVoiceRecognizer(Recognizer):
         except Exception as error:
             logger.critical(f"加载VAD失败: {error}")
             return False
+
+    def create_stream(self):
+        return self.recognizer.create_stream()
+    def decode_stream(self,stream):
+        return self.recognizer.decode_stream(stream)

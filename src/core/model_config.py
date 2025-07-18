@@ -12,8 +12,8 @@ class ModelConfig(ABC):
         self.check_model_path()
 
     def check_model_path(self) -> bool:
-        logger = get_logger(__name__)
         """验证目录文件"""
+        logger = get_logger(__name__)
         if not os.path.exists(self.model_path):
             #print(f'模型不存在:{self.model_path}')
             logger.critical(f'模型不存在:{self.model_path}')
