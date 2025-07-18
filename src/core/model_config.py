@@ -26,7 +26,3 @@ class ModelConfig(ABC):
             logger.critical(f'tokens不存在:{self.tokens_path}')
             raise FileNotFoundError(f'tokens不存在:{self.tokens_path}')
         return True
-
-#    def create_recognizer(self) -> bool:
-#        """初始化识别器"""
-#        pass

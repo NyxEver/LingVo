@@ -6,7 +6,7 @@ if not os.path.exists("logs"):
     os.makedirs("logs")
 
 def get_logger(name):
-
+    """日志模块"""
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
