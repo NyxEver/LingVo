@@ -16,6 +16,7 @@ class RealTimeSTT:
         self.audio_queue = queue.Queue()
         self.killed = False
         self.recording_thread = None
+        self.latest_text = ""
 
     def start_recording(self):
         """启动录音线程"""
@@ -62,6 +63,7 @@ class RealTimeSTT:
                     text = stream.result.text.strip()
                     if text:
                         print(f"最终结果：{text}")
+                        self.latest_text = text  # 保存最新结果
                     buffer=np.array([],dtype=np.float32)#清空缓冲区
                     offset=0
                     speech_start_time=False
@@ -72,3 +74,7 @@ class RealTimeSTT:
             self.killed =True
             if self.recording_thread:
                 self.recording_thread.join()
+
+    def get_latest_text(self):
+        """获取最新的识别文本"""
+        return self.latest_text
