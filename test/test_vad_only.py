@@ -5,8 +5,8 @@ def main():
     print("--- 开始 VAD 模型加载测试 ---")
 
     current_dir=os.path.dirname(os.path.abspath(__file__))
-    parent_dir=os.path.dirname(current_dir)
-    model_dir=os.path.join(parent_dir,'Model')
+    main_dir=os.path.dirname(current_dir)
+    model_dir=os.path.join(main_dir,'Model')
     vad_model_path=os.path.join(model_dir,'silero_vad.onnx')
 
 

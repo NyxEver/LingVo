@@ -47,7 +47,7 @@ class RealTimeSTT:
                         speech_start =True
                         speech_start_time=time.time()
                     offset += window_size
-                if speech_start and time.time() - speech_start_time >0.2: #处理中间结果
+                if speech_start and time.time() - speech_start_time >0.1: #处理中间结果
                     stream =self.recognizer.create_stream()# 创建新的识别流
                     stream.accept_waveform(self.sample_rate, buffer)
                     self.recognizer.decode_stream(stream)# 解码音频
@@ -66,7 +66,7 @@ class RealTimeSTT:
                         self.latest_text = text  # 保存最新结果
                     buffer=np.array([],dtype=np.float32)#清空缓冲区
                     offset=0
-                    speech_start_time=False
+                    speech_start=False
                     speech_start_time=None
         except KeyboardInterrupt:
             print("\n 停止识别")
