@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-main_dir = os.path.dirname(current_dir)
+main_dir = os.path.dirname(os.path.dirname(current_dir))
 logs_dir = os.path.join(main_dir, "logs")
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)

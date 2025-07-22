@@ -6,7 +6,6 @@ import sounddevice as sound
 from src.core.model_config import ModelConfig
 from src.core.sense_voice_recognizer import SenseVoiceRecognizer
 
-
 class RealTimeSTT:
     def __init__(self, config: ModelConfig):
         self.sample_rate = 16000
