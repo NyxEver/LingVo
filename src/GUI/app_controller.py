@@ -23,12 +23,13 @@ class AppController:
             logger.error(f"翻译功能设置失败{error}")
             self.enable_translation= False
 
-    def run_recoginition(self):
+    def run_recognition(self):
         try:
             self.stt_engine.record_run()
         except Exception as error:
             logger.error(f"运行错误{error}")
             self.is_running=False
+            
     def start_recognition(self):
         """启动语音识别"""
         if self.is_running:
@@ -36,7 +37,7 @@ class AppController:
             return
         try:
             self.stt_engine=RealTimeSTT(self.model_config)
-            self.recognition_thread = threading.Thread(target=self.run_recognition,deamon= True)
+            self.recognition_thread = threading.Thread(target=self.run_recognition,daemon=True)
             self.is_running=True
             self.recognition_thread.start()
             logger.info("识别启动")
@@ -52,3 +53,21 @@ class AppController:
         if self.recognition_thread and self.recognition_thread.is_alive():
             self.recognition_thread.join(timeout=2)
         logger.info("识别停止")
+
+    def get_latest_text(self):
+        """获取最新文本"""
+        if not self.stt_engine:
+            logger.warning("识别没有运行")
+            return " "
+        original_text=self.stt_engine.get_latest_text()
+        if self.enable_translation and self.translator and original_text:
+            try:
+                translation_text=self.translator.translate(original_text)
+                return f"{original_text}|{translation_text}"
+            except Exception as error:
+                logger.error(f"翻译失败{error}")
+                return original_text
+        return original_text
+
+    def is_recognition_running(self):
+        return self.is_running

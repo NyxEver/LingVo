@@ -19,7 +19,7 @@ class Translator:
                     {"role": "system", "content": f"You are a professional translator. Translate the following text to {self.target_language}. Only return the translated text, no explanations."},
                     {"role": "user", "content": original_text},
                 ],
-                stream=True
+                stream=False  # 改为非流式
             )
             translation_text = response.choices[0].message.content.strip()
             return translation_text

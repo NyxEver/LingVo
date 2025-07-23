@@ -17,7 +17,7 @@ class SenseVoiceRecognizer(Recognizer):
             logger.info("模型成功加载")
         except Exception as error:
             logger.critical(f'创建失败{error}')
-            return False
+            raise RuntimeError(f"模型初始化失败: {error}")
 
     def create_vad(self, sample_rate):
         """VAD配置"""
